@@ -6,7 +6,7 @@
 
 FROM php:apache
  
-WORKDIR /var/www/html
+WORKDIR /web
 COPY web .
  
 ENV PORT=8000
