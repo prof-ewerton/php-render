@@ -1,1 +1,1 @@
-web: php:8.2-apache www/http
+web: php:8.2-apache web/
