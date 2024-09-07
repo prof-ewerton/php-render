@@ -2,7 +2,7 @@ services:
   www:
     image: novo-php-apache:1.1
     volumes:
-      - "./:/var/www" # sync project dir with container web dir
+      - "./:/var/www/html" # sync project dir with container web dir
     ports:
       - "8080:80"
       - "8081:443" # for future ssl traffic
