@@ -1,1 +1,1 @@
-web: php:8.2-apache web/
+web: heroku-php-apache2 web/
