@@ -3,5 +3,5 @@
     RewriteRule ^index\.php$ - [L]
     RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-f [OR]
     RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} !-d
-    RewriteRule !\.(svg|png|gif|jpg|jpeg|pdf|ico)$ /index.php [L]
+    RewriteRule !\.(svg|png|gif|jpg|jpeg|pdf|ico|jsp|css)$ /index.php [L]
 </IfModule>
