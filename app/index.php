@@ -19,7 +19,7 @@ class Cody {
         }
 
         $router = new Router();
-        $addons = new Addons($router);
+        new Addons($router);
 
         $router->execute();
     }

@@ -1,0 +1,33 @@
+services:
+  web:
+    image: php:apache
+    container_name: apache_php_server
+    ports:
+      - 80:80
+#    hostname: www.app.com
+    environment:
+      - DATABASE_HOST=postgres
+      - DATABASE_USER=postgres
+      - DATABASE_PASS=postgres
+      - DATABASE_PORT=5432
+      - DATABASE_NAME=cody
+    volumes:
+      - ./app:/var/www/html
+      - ./apache/sites-enabled/000-default.conf:/etc/apache2/sites-enabled/000-default.conf
+    command: ["/bin/sh", "-c", "a2enmod rewrite && apache2-foreground"]
+
+  postgres:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+  
+  adminer:
+    image: adminer
+    ports:
+      - 8089:8080
+    restart: always
