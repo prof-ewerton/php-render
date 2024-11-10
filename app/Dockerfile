@@ -5,7 +5,7 @@ RUN sudo a2enmod rewrite && sudo service apache2 restart
 WORKDIR /var/www/html
 COPY web .
  
-ENV PORT=8080
+ENV PORT=80
 
 EXPOSE ${PORT}
  
