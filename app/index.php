@@ -4,6 +4,8 @@
 * Autor: Ewerton Mendonça
 * Descrição:
 */
+define('BASE_PATH', dirname(__DIR__));
+
 require_once('modules/Addons.class.php');
 require_once('modules/Router.class.php');
 

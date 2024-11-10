@@ -18,6 +18,7 @@ class Test extends Addon {
         
         $html = $t->view('topbar', [
             'title' => 'Cody ;D',
+            'icon' => BASE_PATH . 'template\assets\robot.svg',
         ]);
 
         $html = $t->view('page', [ 
