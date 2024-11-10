@@ -18,7 +18,6 @@ RUN echo "DirectoryIndex index.php" >> /etc/apache2/apache2.conf
 # Set public as the Document Root
 # It changes Apache's document root to /var/www/html/public, where your index.php resides
 # RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
-RUN sed -i 's|DocumentRoot /var/www/html|' /etc/apache2/sites-available/000-default.conf
 
 # Sets the working directory in the container to /var/www/html
 WORKDIR /var/www/html
