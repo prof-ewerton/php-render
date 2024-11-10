@@ -2,8 +2,8 @@ FROM php:apache
 
 RUN sudo a2enmod rewrite && sudo service apache2 restart
  
-WORKDIR /var/www/html
-COPY web .
+# WORKDIR /var/www/html
+COPY . /var/www/html
  
 ENV PORT=80
 
