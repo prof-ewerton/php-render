@@ -16,8 +16,7 @@ class CodyEntity {
 	private string $ownerUUID;
 	private string $subtype;
 	private AccessId $accessId = AccessId::ACCESS_PRIVATE;
-	private string $title;
-	private string $description;
+	private string $name;
 
 	private CodyEntityDAO $dao;
 
@@ -65,20 +64,12 @@ class CodyEntity {
 		$this->accessId = $accessId;
 	}
 
-	public function getTitle(): string {
-		return $this->title;
+	public function getName(): string {
+		return $this->name;
 	}
 
-	public function setTitle(string $title) {
-		$this->title = $title;
-	}
-
-	public function getDescription(): string {
-		return $this->description;
-	}
-
-	public function setDescription(string $description) {
-		$this->description = $description;
+	public function setName(string $name) {
+		$this->name = $name;
 	}
 
 	public function save() {

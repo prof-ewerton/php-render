@@ -9,7 +9,7 @@ require_once('addons/Addon.class.php');
 require_once('modules/persistence/entities/CodyEntity.class.php');
 require_once('modules/persistence/AccessId.enum.php');
 require_once('modules/persistence/postgres/ConnectionPostgres.class.php');
-require_once('modules/persistence/postgres/schema/migrations/Migration001.class.php');
+require_once('modules/persistence/postgres/schema/migrations/Migration002.class.php');
 
 class Test extends Addon {
 
@@ -31,8 +31,7 @@ class Test extends Addon {
         $this->e->setOwnerUUID("e47a409c-1d9d-4867-9f77-6d35f73d2b2f");
         $this->e->setSubtype('testtest');
         $this->e->setAccessId(AccessId::ACCESS_PRIVATE);
-        $this->e->setTitle('Entidade Teste ALTERADO');
-        $this->e->setDescription('ALTERADO Entidade para teste de funcionalidade de persistência.');
+        $this->e->setName('Entidade Teste ALTERADO');
 
         $this->e->save();
 
@@ -52,8 +51,7 @@ class Test extends Addon {
         $this->e->setOwnerUUID("987e6543-e21b-32d3-b456-426614174999");
         $this->e->setSubtype('test');
         $this->e->setAccessId(AccessId::ACCESS_PUBLIC);
-        $this->e->setTitle('Entidade Teste');
-        $this->e->setDescription('Entidade para teste de funcionalidade de persistência.');
+        $this->e->setName('Entidade Teste');
 
         $this->e->save();
 
@@ -61,7 +59,7 @@ class Test extends Addon {
     }
 
     public function install() {
-        $m = new Migration001();
+        $m = new Migration002();
         $m->migrate();
     }
 
