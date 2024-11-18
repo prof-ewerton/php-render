@@ -5,26 +5,74 @@
 * Descrição: Addon que cria uma página inicial (padrão do sistema) e a página de erro 404.
 */
 require_once('addons/Addon.class.php');
-require_once('modules/Template.class.php');
+
+require_once('modules/persistence/entities/CodyEntity.class.php');
+require_once('modules/persistence/AccessId.enum.php');
+require_once('modules/persistence/postgres/ConnectionPostgres.class.php');
+require_once('modules/persistence/postgres/schema/migrations/Migration001.class.php');
 
 class Test extends Addon {
+
+    private CodyEntity $e;
     
     public function __construct($router) {
         $router->addRoute('/test', array($this, "index"));
     }
 
     public function index() {
-        $t = new Template();
-        
-        $html = $t->view('topbar', [
-            'title' => 'Cody ;D',
-            'icon' => BASE_PATH . 'template\assets\robot.svg',
-        ]);
+        $this->testConnection();
+        $this->install();
+        $this->testSaveNewEntity();
+        $this->testeEntityExists();
+        $this->testeUpdateEntity();
+    }
 
-        $html = $t->view('page', [ 
-            'title' => 'Teste =-=-=-=-=-=',
-            'content' => $html,
-        ]);
-        $t->out($html);
+    public function testeUpdateEntity() {
+        $this->e->setOwnerUUID("e47a409c-1d9d-4867-9f77-6d35f73d2b2f");
+        $this->e->setSubtype('testtest');
+        $this->e->setAccessId(AccessId::ACCESS_PRIVATE);
+        $this->e->setTitle('Entidade Teste ALTERADO');
+        $this->e->setDescription('ALTERADO Entidade para teste de funcionalidade de persistência.');
+
+        $this->e->save();
+
+        $this->message("Test entity update OK!");
+    }
+
+    public function testeEntityExists() {
+        $resp = $this->e->exists();
+        if ($resp) 
+            $this->message("Test entity exists OK!");
+        else
+            $this->message("Test entity exists fail!!!!!");
+    }
+
+    public function testSaveNewEntity() {
+        $this->e = new CodyEntity();
+        $this->e->setOwnerUUID("987e6543-e21b-32d3-b456-426614174999");
+        $this->e->setSubtype('test');
+        $this->e->setAccessId(AccessId::ACCESS_PUBLIC);
+        $this->e->setTitle('Entidade Teste');
+        $this->e->setDescription('Entidade para teste de funcionalidade de persistência.');
+
+        $this->e->save();
+
+        $this->message("Test save new entity OK! UUID = " . $this->e->getUUID());
+    }
+
+    public function install() {
+        $m = new Migration001();
+        $m->migrate();
+    }
+
+    public function testConnection() {
+        $pg = new ConnectionPostgres();
+        $pg->getConnection();
+
+        $this->message("Teste connection postgres ok!");
+    }
+
+    public function message(string $msg) {
+        echo "<p>" . $msg . "</p>";
     }
 }
