@@ -2,7 +2,7 @@
 /*
 * Project Cody
 * Autor: Ewerton Mendonça
-* Descrição:
+* Descrição: Entidade principal do Cody.
 */
 require_once('modules/persistence/AccessId.enum.php');
 require_once('modules/persistence/postgres/CodyEntityDAO.class.php');
