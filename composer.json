@@ -1,0 +1,25 @@
+{
+    "name": "netrometro/cody",
+    "description": "Um CMS focado em educação, análise de aprendizado e gamificação.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "app\\": "app/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "tests\\": "tests/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Ewerton Mendonça",
+            "email": "netrometro@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "12.0.x-dev"
+    }
+}

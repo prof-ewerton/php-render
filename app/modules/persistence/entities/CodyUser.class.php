@@ -29,7 +29,6 @@ class CodyUser extends CodyEntity {
     public function save() {
         $this->save($this);
         // TODO: Fazer um dao para user que salve informações pessoais dos usuários em outra tabela.
-        // TODO: Incluir uma nova tabela na migration3.
         // TODO: O resto das informações serão anotações.
     }
 }
