@@ -23,20 +23,51 @@ class StaticPages extends Addon {
     public function index() {
         $t = new Template();
 
-        $html = $t->view('topbar', [
-            'title' => 'Cody ;D',
+        // TODO: Fazer uma funcionalidade no template que receba um array e monte, com os templates, um formulário.
+        $form = $t->form([
+            
+        ]);
+
+        
+        $html = $t->card([
+            'header' => 'CODY ;D',
             'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
         ]);
 
-        // TODO: Precisa fazer um container de grade para o conteúdo
-
-        // TODO: Fazer uma funcionalidade no template que receba um array e monte, com os templates, um formulário.
-
-
-        $html = $t->view('page', [ 
-            'title' => 'Teste =-=-=-=-=-=',
-            'content' => $html,
+        $html .= $t->card([
+            'header' => 'AUTENTICAÇÃO DE USUÁRIO',
+            'content' => $form,
         ]);
+
+
+        $html = $t->grid([
+            [
+                [
+                    'content' => '',
+                    'width'   => '3',
+                 ],
+                 [
+                    'align' => 'start',
+                    'content' => $html,
+                    'width'   => '6',
+                 ],
+                 [
+                    'content' => '',
+                    'width'   => '3',
+                 ],
+             ],
+        ]);
+
+
+        $html = $t->page([
+            'title' => 'Cody :D',
+            'content' => $html,
+            //'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
+            'css' => '<link rel="stylesheet" href="template/assets/css/bootstrap.min.css">',
+            'scripts-top' => '<script src="template/assets/js/bootstrap.bundle.min.js"></script>',
+            'scripts-botton' => '<script src="template/assets/js/bootstrap.bundle.min.js"></script>',
+        ]);
+
         $t->out($html);
     }
 
@@ -91,17 +122,17 @@ class StaticPages extends Addon {
         $options = [
             [
                [
-                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'align' => 'start', /* ou 'center' ou 'end',*/
                     'content' => 'Linha 1, coluna 1',
                     'width'   => '2',
                 ],
                 [
-                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'align' => 'start', /* ou 'center' ou 'end',*/
                     'content' => 'Linha 1, coluna 2',
                     'width'   => '4',
                 ],
                 [
-                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'align' => 'start', /* ou 'center' ou 'end',*/
                     'content' => 'Linha 1, coluna 3',
                     'width'   => '6',
                 ],
@@ -193,8 +224,8 @@ class StaticPages extends Addon {
         $html .= $t->card($options);
 
 
-        $html = $t->view('page', [ 
-            'title' => 'Teste cards',
+        $html = $t->page([
+            'title' => 'Cody :D',
             'content' => $html,
         ]);
         $t->out($html);
@@ -216,8 +247,8 @@ class StaticPages extends Addon {
         ];
         $html = $t->card($options);
 
-        $html = $t->view('page', [ 
-            'title' => 'Teste cards',
+        $html = $t->page([
+            'title' => 'Cody :D',
             'content' => $html,
         ]);
         $t->out($html);

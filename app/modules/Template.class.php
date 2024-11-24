@@ -198,7 +198,7 @@ class Template {
     * Recebe a localização relativa do template a partir da pasta components 'Page' e
     * um array correspondente as chaves e valores substitutos.
     */
-    public function view(string $tpl, array $vars): string {
+    private function view(string $tpl, array $vars): string {
         $path = getcwd() . DIRECTORY_SEPARATOR . 'template' . DIRECTORY_SEPARATOR . 'components' . DIRECTORY_SEPARATOR;
 
         $html = file_get_contents($path . strtolower($tpl) . '.tpl');
