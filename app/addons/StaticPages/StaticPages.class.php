@@ -13,15 +13,23 @@ class StaticPages extends Addon {
         $router->addRoute('/', array($this, "index"));
         $router->addRoute('/about', array($this, "about"));
         $router->addRoute('/404', array($this, "error"));
+        $router->addRoute('/cards', array($this, "cards"));
+        $router->addRoute('/form', array($this, "form"));
+        
     }
 
     public function index() {
         $t = new Template();
-        
+
         $html = $t->view('topbar', [
             'title' => 'Cody ;D',
             'icon' => BASE_PATH . 'template\assets\robot.svg',
         ]);
+
+        // TODO: Precisa fazer um container de grade para o conteúdo
+
+        // TODO: Fazer uma funcionalidade no template que receba um array e monte, com os templates, um formulário.
+
 
         $html = $t->view('page', [ 
             'title' => 'Teste =-=-=-=-=-=',
@@ -49,5 +57,80 @@ class StaticPages extends Addon {
         <p>ABOUT</p>
         </body>
         EOL;
+    }
+
+    public function cards() {
+        $t = new Template();
+
+        // Cria um card vazio.
+        $options = [];
+        $html = $t->card($options);
+
+        // Criação de mais um card, com conteúdo.
+        $options = [
+            'content' => 'Teste de conteúdo de um card.',
+        ];
+        $html .= $t->card($options);
+
+        // Criação de mais um card, com título e conteúdo.
+        $options = [
+            'title' => 'Teste de título de um card',
+            'content' => 'Teste de conteúdo de um card.',
+        ];
+        $html .= $t->card($options);
+
+        // Criação de mais um card, com título, legenda e conteúdo.
+        $options = [
+            'title' => 'Teste de título de um card',
+            'subtitle' => 'Legenda do card',
+            'content' => 'Teste de conteúdo de um card.',
+        ];
+        $html .= $t->card($options);
+
+        // Criação de mais um card, imagem e conteúdo.
+        $options = [
+            'image' => [
+                'src' => 'https://placebear.com/300/200',
+                'alt' => 'Descrição da imagem',
+            ],
+            'content' => 'Teste de conteúdo de um card.',
+        ];
+        $html .= $t->card($options);
+        
+        // Criação de mais um card com título, legenda, botão e conteúdo.
+        $options = [
+            'title' => 'Teste de título de um card',
+            'subtitle' => 'Legenda do card',
+            'content' => 'Teste de conteúdo de um card.',
+            'button' => [
+                'text' => 'Google',
+                'href' => 'https://www.google.com',
+            ]
+        ];
+        $html .= $t->card($options);
+
+        // Criação de mais um card com apenas conteúdo personalizado.
+        $options = [
+            'others' => 'Conteúdo personalizado',
+        ];
+        $html .= $t->card($options);
+
+
+        $html = $t->view('page', [ 
+            'title' => 'Teste cards',
+            'content' => $html,
+        ]);
+        $t->out($html);
+    }
+
+    public function form() {
+        $t = new Template();
+
+
+        $html = $t->view('page', [ 
+            'title' => 'Teste cards',
+            'content' => $html,
+        ]);
+        $t->out($html);
     }
 }

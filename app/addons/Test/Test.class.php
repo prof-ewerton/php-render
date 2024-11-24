@@ -7,6 +7,7 @@
 require_once('addons/Addon.class.php');
 
 require_once('modules/persistence/entities/CodyEntity.class.php');
+require_once('modules/persistence/entities/CodyUser.class.php');
 require_once('modules/persistence/AccessId.enum.php');
 require_once('modules/persistence/postgres/ConnectionPostgres.class.php');
 require_once('modules/persistence/postgres/schema/migrations/Migration003.class.php');
@@ -14,6 +15,7 @@ require_once('modules/persistence/postgres/schema/migrations/Migration003.class.
 class Test extends Addon {
 
     private CodyEntity $e;
+    private CodyUser $u;
     
     public function __construct($router) {
         $router->addRoute('/test', array($this, "index"));
@@ -25,6 +27,15 @@ class Test extends Addon {
         $this->testSaveNewEntity();
         $this->testeEntityExists();
         $this->testeUpdateEntity();
+        $this->testeRegisterUser();
+    }
+
+    public function testeRegisterUser() {
+        $this->u = new CodyUser();
+        $this->u->setName("Ewerton Mendonça");
+        $this->u->setEmail("ewerton@gmail.com");
+        $this->u->setPassword("111");
+        $this->u->save();
     }
 
     public function testeUpdateEntity() {

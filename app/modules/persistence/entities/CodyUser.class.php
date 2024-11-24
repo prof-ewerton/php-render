@@ -28,7 +28,15 @@ class CodyUser extends CodyEntity {
 
     public function save() {
         $this->save($this);
-        // TODO: Fazer um dao para user que salve informações pessoais dos usuários em outra tabela.
-        // TODO: O resto das informações serão anotações.
+        
+        $dao = new CodyUserDAO();
+
+        if ($dao->exists($this)) {
+            $dao->update($this);
+        } else {
+            $dao->register($this);
+        }
+        
+        $dao->register($this);
     }
 }

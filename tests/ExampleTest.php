@@ -9,3 +9,5 @@ class ExampleTest extends TestCase {
         $this->assertTrue(true);
     }
 }
+
+// vendor\bin\phpunit tests --colors
