@@ -13,6 +13,8 @@ class StaticPages extends Addon {
         $router->addRoute('/', array($this, "index"));
         $router->addRoute('/about', array($this, "about"));
         $router->addRoute('/404', array($this, "error"));
+        $router->addRoute('/container', array($this, "container"));
+        $router->addRoute('/fluid', array($this, "fluid"));
         $router->addRoute('/cards', array($this, "cards"));
         $router->addRoute('/form', array($this, "form"));
         
@@ -23,7 +25,7 @@ class StaticPages extends Addon {
 
         $html = $t->view('topbar', [
             'title' => 'Cody ;D',
-            'icon' => BASE_PATH . 'template\assets\robot.svg',
+            'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
         ]);
 
         // TODO: Precisa fazer um container de grade para o conteúdo
@@ -59,6 +61,31 @@ class StaticPages extends Addon {
         EOL;
     }
 
+    public function container() {
+        $t = new Template();
+
+        $options = [
+            'title' => 'Cody ;D',
+            'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
+        ];
+        $html = $t->page($options);
+
+        $t->out($html);
+    }
+
+    public function fluid() {
+        $t = new Template();
+
+        $options = [
+            'title' => 'Cody ;D',
+            'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
+            'type' => 'fluid',
+        ];
+        $html = $t->page($options);
+
+        $t->out($html);
+    }
+
     public function cards() {
         $t = new Template();
 
@@ -66,8 +93,9 @@ class StaticPages extends Addon {
         $options = [];
         $html = $t->card($options);
 
-        // Criação de mais um card, com conteúdo.
+        // Criação de mais um card, com conteúdo e cabeçalho.
         $options = [
+            'header' => 'Teste de cabeçalho',
             'content' => 'Teste de conteúdo de um card.',
         ];
         $html .= $t->card($options);
@@ -126,6 +154,18 @@ class StaticPages extends Addon {
     public function form() {
         $t = new Template();
 
+
+        $options = [];
+        $html = $t->form($options);
+
+
+
+
+        $options = [
+            'header' => 'Fomulário de autenticação',
+            'others' => $html,
+        ];
+        $html = $t->card($options);
 
         $html = $t->view('page', [ 
             'title' => 'Teste cards',

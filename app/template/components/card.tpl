@@ -1,8 +1,9 @@
 
 <div class="card">
+    {{card-header}}
     {{card-img}}
     <div class="card-body">
-        {{card-header}}
+        {{card-title}}
         {{card-subtitle}}
         {{card-text}}
         {{card-button}}

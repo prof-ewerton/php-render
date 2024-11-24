@@ -14,12 +14,59 @@ class Template {
 
     /* TODO: Talvez a page seja já o out, porque mesmo que o out seja chamado sem nada, gera um html com body vazio, mas com o css e o js do bootstrap.
     * $options = [
-    *   
+    *   'type' => 'container' ou 'fluid',
+    *   'title' => 'título da página',
+    *   'favicon => 'source do favicon',
+    *   'css' => 'lista de links css acrescentados a página';
+    *   'scripts-top => 'lista de scripts adicionados ao início da página';
+    *   'scripts-botton => 'lista de scripts adicionados ao final da página';
+    *   'content' => 'Conteúdo dentro da tag body',
     * ]
     */
     public function page(array $options): string {
+        $opt = [];
 
-        return "";
+        if (isset($options['content'])) {
+            $value = $options['content'];
+            $opt['content'] = "<div class='container'>$value</div>";
+        } else { exit(); }
+
+        if (isset($options['type'])) {
+            $value = $options['type'];
+            if ($options['type'] == 'fluid') {
+                $opt['content'] = "<div class='container-fluid'>$value</div>";
+            }
+        }
+
+        if (isset($options['title'])) {
+            $value = $options['title'];
+            $opt['title'] = "<title>$value</title>";
+        } else { $opt['title'] = ''; }
+
+        if (isset($options['favicon'])) {
+            $value = $options['favicon'];
+            $opt['favicon'] = "<link rel='icon' href='$value' type='image/x-icon' >";
+        } else { $opt['favicon'] = '<link rel="icon" href="template/assets/favicon_io/favicon.ico" type="image/x-icon">'; }
+/*
+        // TODO: CSS
+        if (isset($options['favicon'])) {
+            $value = $options['favicon'];
+            $opt['favicon'] = "<link rel='icon' href='$value' type='image/x-icon' >";
+        } else { $opt['favicon'] = '<link rel="icon" href="template/assets/favicon_io/favicon.ico" type="image/x-icon">'; }
+        
+        // TODO: Scripts no header
+        if (isset($options['favicon'])) {
+            $value = $options['favicon'];
+            $opt['favicon'] = "<link rel='icon' href='$value' type='image/x-icon' >";
+        } else { $opt['favicon'] = '<link rel="icon" href="template/assets/favicon_io/favicon.ico" type="image/x-icon">'; }
+        
+        // TODO: Scripts no footer
+        if (isset($options['favicon'])) {
+            $value = $options['favicon'];
+            $opt['favicon'] = "<link rel='icon' href='$value' type='image/x-icon' >";
+        } else { $opt['favicon'] = '<link rel="icon" href="template/assets/favicon_io/favicon.ico" type="image/x-icon">'; }
+*/
+        return $this->view('page', $opt);
     }
 
     public function grid(array $options): string {
@@ -29,18 +76,19 @@ class Template {
 
     /*
     * $options = [
-    *   'title' => 'Título do card',
+    *    'header' => 'Título do card',
+    *   'title' => 'Título do conteúdo do card',
     *   'subtitle' => 'Subtítulo do card',
     *   'content' => 'Conteúdo do card',
     *   'image' => [
     *       'src' => 'src da imagem',
     *       'alt' => 'descrição da imagem',
     *    ],
-        'button' => [
-            'text' => 'Google',
-            'href' => 'https://www.google.com',
-        ],
-        'others' => 'Qualquer outro conteúdo personalizado',
+    *    'button' => [
+    *        'text' => 'Google',
+    *        'href' => 'https://www.google.com',
+    *    ],
+    *    'others' => 'Qualquer outro conteúdo personalizado',
     * ]
     */
     public function card(array $options): string {
@@ -52,10 +100,16 @@ class Template {
         } else { $opt["card-text"] = ''; }
 
 
+        if (isset($options["header"])) {
+            $value = $options["header"];
+            $opt["card-header"] = "<div class='card-header'>$value</div>";
+        } else { $opt["card-header"] = ''; }
+
+
         if (isset($options["title"])) {
             $value = $options["title"];
-            $opt["card-header"] = "<h5 class='card-title'>$value</h5>";
-        } else { $opt["card-header"] = ''; }
+            $opt["card-title"] = "<h5 class='card-title'>$value</h5>";
+        } else { $opt["card-title"] = ''; }
 
 
         if (isset($options["subtitle"])) {
@@ -91,9 +145,17 @@ class Template {
         return $this->view('card', $opt);
     }
 
+    /*
+    * $options = [
+    *    'email' => [
+    *        'email' => 'email@email.com',
+    *    ]
+    * ]
+    */
     public function form(array $options): string {
+        $opt = [];
 
-        return "";
+        return $this->view('form', $opt);
     }
 
 
