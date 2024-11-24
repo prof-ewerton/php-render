@@ -13,6 +13,7 @@ class Template {
     */
 
     /* TODO: Talvez a page seja já o out, porque mesmo que o out seja chamado sem nada, gera um html com body vazio, mas com o css e o js do bootstrap.
+    *  TODO: Outro ponto é decidir se envia em HTML ou JSON pelo out.
     * $options = [
     *   'type' => 'container' ou 'fluid',
     *   'title' => 'título da página',
@@ -69,9 +70,43 @@ class Template {
         return $this->view('page', $opt);
     }
 
+    /* TODO: Talvez a page seja já o out, porque mesmo que o out seja chamado sem nada, gera um html com body vazio, mas com o css e o js do bootstrap.
+    *  TODO: Outro ponto é decidir se envia em HTML ou JSON pelo out.
+    * $options = [
+    *    [
+    *        [
+    *            'align' => 'start' ou 'center' ou 'end',
+    *            'content' => 'Conteúdo da célula',
+                 'width' => '1' ou '2' ou '3' ou '4' ou '5' ou '6' ou '7' ou '8' ou '9' ou '10' ou '11' ou '12',
+    *        ],
+    *    ],
+    * ]
+    */
     public function grid(array $options): string {
+        $html = '';
+        foreach ($options as $row) {
+            $html .= '<div class="row">';
+            foreach ($row as $col) {
 
-        return "";
+                if(isset($col['align'])) {
+                    $align = $col['align'];
+                } else { $align = 'center'; }
+
+                if(isset($col['content'])) {
+                    $content = $col['content'];
+                } else { $content = ''; }
+
+                if(isset($col['width'])) {
+                    $width = '-' . $col['width'];
+                } else { $width = ''; }
+
+
+                $html .= "<div class='col{$width} text-{$align}'>{$content}</div>";
+            }
+            $html .= '</div>';
+        }
+        
+        return $html;
     }
 
     /*

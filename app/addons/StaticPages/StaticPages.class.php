@@ -17,7 +17,7 @@ class StaticPages extends Addon {
         $router->addRoute('/fluid', array($this, "fluid"));
         $router->addRoute('/cards', array($this, "cards"));
         $router->addRoute('/form', array($this, "form"));
-        
+        $router->addRoute('/grid', array($this, "grid"));
     }
 
     public function index() {
@@ -80,6 +80,55 @@ class StaticPages extends Addon {
             'title' => 'Cody ;D',
             'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
             'type' => 'fluid',
+        ];
+        $html = $t->page($options);
+
+        $t->out($html);
+    }
+
+    public function grid() {
+        $t = new Template();
+        $options = [
+            [
+               [
+                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 1, coluna 1',
+                    'width'   => '2',
+                ],
+                [
+                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 1, coluna 2',
+                    'width'   => '4',
+                ],
+                [
+                    'aligner' => 'start', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 1, coluna 3',
+                    'width'   => '6',
+                ],
+            ],
+            [
+               [
+                    'align' => 'start', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 2, coluna 1',
+                    'width'   => '6',
+                ],
+                [
+                    'align' => 'center', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 2, coluna 2',
+                    'width'   => '4',
+                ],
+                [
+                    'align' => 'end', /* ou 'center' ou 'end',*/
+                    'content' => 'Linha 2, coluna 3',
+                    'width'   => '2',
+                ],
+            ],
+        ];
+        $html = $t->grid($options);
+
+        $options = [
+            'title' => 'Cody ;D',
+            'content' => $html,
         ];
         $html = $t->page($options);
 
