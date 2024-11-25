@@ -15,17 +15,68 @@ class StaticPages extends Addon {
         $router->addRoute('/404', array($this, "error"));
         $router->addRoute('/container', array($this, "container"));
         $router->addRoute('/fluid', array($this, "fluid"));
+        $router->addRoute('/grid', array($this, "grid"));
         $router->addRoute('/cards', array($this, "cards"));
         $router->addRoute('/form', array($this, "form"));
-        $router->addRoute('/grid', array($this, "grid"));
+        $router->addRoute('/formpost', array($this, "formpost"));
+    }
+
+    public function formpost() {
+        $t = new Template();
+
+        $params = Router::$POST;
+
+        $html = $t->card([
+            'header' => 'CODY ;D',
+            'content' => "<code>" . json_encode($params) . "</code>",
+        ]);
+
+        $html = $t->grid([
+            [
+                [
+                    'content' => '',
+                    'width'   => '3',
+                 ],
+                 [
+                    'align' => 'start',
+                    'content' => $html,
+                    'width'   => '6',
+                 ],
+                 [
+                    'content' => '',
+                    'width'   => '3',
+                 ],
+             ],
+        ]);        
+
+        $html = $t->page([
+            'title' => 'Cody :D',
+            'content' => $html,
+            'button' => [
+                'type' => 'submit',
+                'value' => 'Enviar',
+            ]
+        ]);
+
+        $t->out($html);
     }
 
     public function index() {
         $t = new Template();
 
-        // TODO: Fazer uma funcionalidade no template que receba um array e monte, com os templates, um formulário.
         $form = $t->form([
-            
+           'method' => 'POST',
+           'action' => '/formpost',
+           'description' => 'Autenticação necessária para acessar o sistema.',
+           'button' => [
+                'value' => 'Autenticar',
+           ],
+           'email' => [
+               'placeholder' => 'Digite seu e-mail',
+           ],
+           'password' => [
+               'placeholder' => 'Digite sua senha',
+           ],
         ]);
 
         

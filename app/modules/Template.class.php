@@ -182,13 +182,58 @@ class Template {
 
     /*
     * $options = [
-    *    'email' => [
-    *        'email' => 'email@email.com',
-    *    ]
+    *   'method' => 'GET' ou 'POST',
+    *   'action' => 'url',
+    *   'description' => 'Qualquer outro conteúdo personalizado',
+    *   'text' => [
+    *       'placeholder' => '',
+    *   ],
+    *   'number' => [
+    *       'placeholder' => '',
+    *   ],
+    *   'hidden' => [
+    *       'name' => 'value',
+    *   ],
+    *   'email' => [
+    *       'placeholder' => '',
+    *   ],
+    *   'password' => [
+    *       'placeholder' => '',
+    *   ],
+    *   'textarea' => [
+    *       'placeholder' => '',
+    *   ],
+    *   'select' => [
+    *   ],
+    *   'checkbox' => [
+    *   ],
+    *   'radio' => [
+    *   ],
+    *   'file' => [
+    *   ],
+    *   'button' => [
+    *       'value' => 'Enviar',
+    *   ],
     * ]
     */
     public function form(array $options): string {
         $opt = [];
+
+        if (! isset($options["method"]) || ! isset($options["action"]))  return '';
+        
+        $opt['method'] = $options["method"];
+        $opt['action'] = $options["action"];
+
+        if (isset($options["button"]["value"])) {
+            $value = $options["button"]["value"];
+            $opt["button"] = "<button type='submit' class='btn btn-primary'>$value</button>";
+        } else { $opt["button"] = ""; }
+
+        if (isset($options["description"])) {
+            $value = $options["description"];
+            $opt["description"] = "<p class='form-text'>$value</p>";
+        } else { $opt["description"] = ''; }
+
 
         return $this->view('form', $opt);
     }
