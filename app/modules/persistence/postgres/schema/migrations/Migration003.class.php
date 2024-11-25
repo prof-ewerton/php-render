@@ -41,10 +41,10 @@ class Migration003 {
         try {
             $sql = "CREATE TABLE entity (
                 uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-                owner_uuid UUID NOT NULL,
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 type_name VARCHAR(255) NOT NULL DEFAULT 'object',
                 subtype VARCHAR(255) NOT NULL,
+                owner_uuid UUID,
                 access_id INTEGER NOT NULL DEFAULT 0,
                 entity_name VARCHAR(255)
             )";

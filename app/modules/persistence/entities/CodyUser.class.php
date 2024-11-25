@@ -5,10 +5,16 @@
 * Descrição: Entidade de usuário do Cody.
 */
 require_once('modules/persistence/entities/CodyEntity.class.php');
+require_once('modules/persistence/postgres/CodyUserDAO.class.php');
 
 class CodyUser extends CodyEntity {
     private string $email;
     private string $password;
+
+    public function __construct() {
+        parent::__construct();
+        parent::setSubType('user');
+    }
 
     public function getEmail(): string {
         return $this->email;
@@ -27,7 +33,7 @@ class CodyUser extends CodyEntity {
     }
 
     public function save() {
-        $this->save($this);
+        parent::save();
         
         $dao = new CodyUserDAO();
 
@@ -36,7 +42,5 @@ class CodyUser extends CodyEntity {
         } else {
             $dao->register($this);
         }
-        
-        $dao->register($this);
     }
 }

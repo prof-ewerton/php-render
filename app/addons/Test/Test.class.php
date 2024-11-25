@@ -32,8 +32,8 @@ class Test extends Addon {
 
     public function testeRegisterUser() {
         $this->u = new CodyUser();
-        $this->u->setName("Ewerton Mendonça");
-        $this->u->setEmail("ewerton@gmail.com");
+        $this->u->setName("Fulano de Tal");
+        $this->u->setEmail("fulano@email.com");
         $this->u->setPassword("111");
         $this->u->save();
     }

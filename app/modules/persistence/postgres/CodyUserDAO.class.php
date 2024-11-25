@@ -16,9 +16,9 @@ class CodyUserDAO {
     }
 
     public function exists(CodyUser $user): bool {
-        $sql = "SELECT EXISTS ( SELECT 1 FROM users WHERE uuid = :uuid )";
+        $sql = "SELECT EXISTS ( SELECT 1 FROM users WHERE uuid_entity = :uuid )";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindParam(':uuid', $user->getUUID(), PDO::PARAM_STR);
+        $stmt->bindValue(':uuid', $user->getUUID());
         $stmt->execute();
         
         $exists = $stmt->fetchColumn();
@@ -29,11 +29,11 @@ class CodyUserDAO {
     public function register(CodyUser $user): CodyUser {
         try {
             $sql = "INSERT INTO 
-                    cody_user (name, email, password) 
-                    VALUES (:name, :email, :password)
-                    RETURNING uuid";
+                    users (uuid_entity, email, password) 
+                    VALUES (:uuid_entity, :email, :password)
+                    RETURNING uuid_entity";
             $stmt = $this->pdo->prepare($sql);
-            $stmt->bindValue(':name', $user->getName());
+            $stmt->bindValue(':uuid_entity', $user->getUUID());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
             $uuid = $stmt->execute();
@@ -45,7 +45,7 @@ class CodyUserDAO {
         }
     }
 
-    public function update(CodyUser $user): CodyUser {
+    public function update(CodyUser $user) {
         /*
         try {
             $sql = "UPDATE cody_user SET name = :name, email = :email, password = :password WHERE uuid = :uuid";
@@ -61,7 +61,6 @@ class CodyUserDAO {
         }
         return $user;
         */
-        return null;
     }
 
     public function searchUser(string $email, string $password): CodyUser {

@@ -13,10 +13,10 @@ class CodyEntity {
 	private DateTime $createdAt;
 	private string $type = 'object';
 
-	private string $ownerUUID;
-	private string $subtype;
+	private string $ownerUUID = '';
+	private string $subtype = '';
 	private AccessId $accessId = AccessId::ACCESS_PRIVATE;
-	private string $name;
+	private string $name = '';
 
 	private CodyEntityDAO $dao;
 
