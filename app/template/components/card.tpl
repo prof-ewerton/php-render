@@ -1,5 +1,5 @@
 
-<div class="card m-2">
+<div class="card mt-2 mb-2">
     {{card-header}}
     {{card-img}}
     <div class="card-body">

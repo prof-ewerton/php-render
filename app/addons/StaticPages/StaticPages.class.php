@@ -2,7 +2,7 @@
 /*
 * Project Cody
 * Autor: Ewerton Mendonça
-* Descrição: Addon que cria uma página inicial (padrão do sistema) e a página de erro 404.
+* Descrição: Addon que cria páginas estáticas como Erro 404 sem utilização de Template.
 */
 require_once('addons/Addon.class.php');
 require_once('modules/Template.class.php');
@@ -10,116 +10,12 @@ require_once('modules/Template.class.php');
 class StaticPages extends Addon {
     
     public function __construct($router) {
-        $router->addRoute('/', array($this, "index"));
         $router->addRoute('/about', array($this, "about"));
         $router->addRoute('/404', array($this, "error"));
         $router->addRoute('/container', array($this, "container"));
         $router->addRoute('/fluid', array($this, "fluid"));
         $router->addRoute('/grid', array($this, "grid"));
         $router->addRoute('/cards', array($this, "cards"));
-        $router->addRoute('/form', array($this, "form"));
-        $router->addRoute('/formpost', array($this, "formpost"));
-    }
-
-    public function formpost() {
-        $t = new Template();
-
-        $params = Router::$POST;
-
-        $html = $t->card([
-            'header' => 'CODY ;D',
-            'content' => "<code>" . json_encode($params) . "</code>",
-        ]);
-
-        $html = $t->grid([
-            [
-                [
-                    'content' => '',
-                    'width'   => '3',
-                 ],
-                 [
-                    'align' => 'start',
-                    'content' => $html,
-                    'width'   => '6',
-                 ],
-                 [
-                    'content' => '',
-                    'width'   => '3',
-                 ],
-             ],
-        ]);        
-
-        $html = $t->page([
-            'title' => 'Cody :D',
-            'content' => $html,
-            'button' => [
-                'type' => 'submit',
-                'value' => 'Enviar',
-            ]
-        ]);
-
-        $t->out($html);
-    }
-
-    public function index() {
-        $t = new Template();
-
-        $form = $t->form([
-           'method' => 'POST',
-           'action' => '/formpost',
-           'description' => 'Autenticação necessária para acessar o sistema.',
-           'button' => [
-                'value' => 'Autenticar',
-           ],
-           'email' => [
-               'placeholder' => 'Digite seu e-mail',
-           ],
-           'password' => [
-               'placeholder' => 'Digite sua senha',
-           ],
-        ]);
-
-        
-        $html = $t->card([
-            'header' => 'CODY ;D',
-            'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
-        ]);
-
-        $html .= $t->card([
-            'header' => 'AUTENTICAÇÃO DE USUÁRIO',
-            'content' => $form,
-        ]);
-
-
-        $html = $t->grid([
-            [
-                [
-                    'content' => '',
-                    'width'   => '3',
-                 ],
-                 [
-                    'align' => 'start',
-                    'content' => $html,
-                    'width'   => '6',
-                 ],
-                 [
-                    'content' => '',
-                    'width'   => '3',
-                 ],
-             ],
-        ]);
-
-
-        $html = $t->page([
-            'title' => 'Cody :D',
-            'content' => $html,
-            //'content' => 'Bem vindo ao Cody, o sistema de gerenciamento de conteúdo educacional com learning analytics e gamificação.',
-            'css' => '<link rel="stylesheet" href="template/assets/css/bootstrap.min.css">',
-            'scripts-top' => '<script src="template/assets/js/bootstrap.bundle.min.js"></script>',
-            'scripts-botton' => '<script src="template/assets/js/bootstrap.bundle.min.js"></script>',
-        ]);
-
-        $t->out($html);
     }
 
     public function error() {
@@ -274,29 +170,6 @@ class StaticPages extends Addon {
         ];
         $html .= $t->card($options);
 
-
-        $html = $t->page([
-            'title' => 'Cody :D',
-            'content' => $html,
-        ]);
-        $t->out($html);
-    }
-
-    public function form() {
-        $t = new Template();
-
-
-        $options = [];
-        $html = $t->form($options);
-
-
-
-
-        $options = [
-            'header' => 'Fomulário de autenticação',
-            'others' => $html,
-        ];
-        $html = $t->card($options);
 
         $html = $t->page([
             'title' => 'Cody :D',

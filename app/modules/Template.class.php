@@ -90,7 +90,7 @@ class Template {
 
                 if(isset($col['align'])) {
                     $align = $col['align'];
-                } else { $align = 'center'; }
+                } else { $align = 'start'; }
 
                 if(isset($col['content'])) {
                     $content = $col['content'];
@@ -184,7 +184,27 @@ class Template {
     * $options = [
     *   'method' => 'GET' ou 'POST',
     *   'action' => 'url',
-    *   'description' => 'Qualquer outro conteúdo personalizado',
+    *   'description' => 'Explicações sobre o formulário',
+    *   'outhers' => 'Qualquer outro conteúdo personalizado',
+    *   'form' => [
+            'submit' => [
+                'style' => 'primary', // primary, secondary, success, danger, warning, info, light, dark, link
+                'text' => 'Entrar',
+            ],
+            'reset' => [
+                'style' => 'primary',
+                'text' => 'Entrar',
+            ],
+            'button' => [
+                'style' => 'primary',
+                'text' => 'Entrar',
+            ],
+    *   ],
+
+
+
+
+
     *   'text' => [
     *       'placeholder' => '',
     *   ],
@@ -224,16 +244,54 @@ class Template {
         $opt['method'] = $options["method"];
         $opt['action'] = $options["action"];
 
-        if (isset($options["button"]["value"])) {
-            $value = $options["button"]["value"];
-            $opt["button"] = "<button type='submit' class='btn btn-primary'>$value</button>";
-        } else { $opt["button"] = ""; }
-
         if (isset($options["description"])) {
             $value = $options["description"];
             $opt["description"] = "<p class='form-text'>$value</p>";
         } else { $opt["description"] = ''; }
 
+        if (isset($options["form"])) {
+            $formOut = "";
+
+            foreach ($options["form"] as $key => $value) {
+                $group = "<div class='form-group mb-3'>";
+                if ($key == 'submit' || $key == 'reset' || $key == 'button') {
+                    $style = "";
+                    if (isset($value["style"])) {
+                        $style = $value["style"];
+                        $style = "btn btn-$style";
+                    }
+                    $text = "";
+                    if (isset($value["text"])) {
+                        $text = $value["text"];
+                    }
+                    $group .= "<button type='$key' class='$style mx-2'>$text</button>";
+                }
+
+
+                if ($key == 'text' || $key == 'email' || $key == 'password') {
+                    $placeholder = isset($value["placeholder"]) ?  $value["placeholder"] : '';
+                    $variable = isset($value["variable"]) ?  $value["variable"] : '';
+
+                    $label = "";
+                    if (isset($value["label"])) {
+                        $label = $value["label"];
+                        $label = "<label for='$variable'>$label</label>";
+                    }
+
+                    $group .= $label . "<input type='$key' name='$variable' id='$variable' class='form-control' placeholder='$placeholder'>";
+                }
+
+                $group .= "</div>";
+                $formOut .= $group;
+            }
+
+            $opt["form"] = $formOut;
+        }
+
+        if (isset($options["others"])) {
+            $value = $options["others"];
+            $opt["others"] = $value;
+        } else { $opt["others"] = ''; }
 
         return $this->view('form', $opt);
     }
