@@ -11,6 +11,8 @@ function registerUserPage() {
 
 // TODO: Deixar o formulário com verificação antes do envio.
 
+    
+
     $form = $t->form([
        'method' => 'POST',
        'action' => '/registerController',

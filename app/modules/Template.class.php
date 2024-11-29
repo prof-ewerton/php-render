@@ -296,6 +296,16 @@ class Template {
         return $this->view('form', $opt);
     }
 
+    public function link(array $options): string {
+        $opt = [];
+
+        $opt["target"] = isset($options["target"]) ? $options["target"] : '_self';
+        $opt["text"] = isset($options["text"]) ? $options["text"] : '';
+        $opt["url"] = isset($options["url"]) ? $options["url"] : '';
+
+        return $this->view('link', $opt);
+    }
+
 
     /*
     * Recebe a localização relativa do template a partir da pasta components 'Page' e

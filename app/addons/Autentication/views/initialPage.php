@@ -11,11 +11,16 @@ function initialPage() {
 
 // TODO: Deixar o formulário com verificação antes do envio.
 
+    $linkRegister = $t->link([
+        'url' => '/register-form',
+        'text' => 'Fazer parte do Cody :D (Cadastro de usuários)',
+    ]);
+
     $form = $t->form([
        'method' => 'POST',
        'action' => '/autentication',
        'description' => 'Autenticação necessária para acessar o sistema.',
-       'others' => '<p class="form-text">Suas informações não serão compartilhadas com terceiros.</p>',
+       'others' => "<p class='form-text'>$linkRegister</p>",
        'form' => [
             'email' => [
                 'placeholder' => 'Digite seu e-mail',
