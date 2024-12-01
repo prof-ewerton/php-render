@@ -27,8 +27,8 @@ services:
     volumes:
       - ./postgres:/var/lib/postgresql/data
   
-  adminer:
-    image: adminer
-    ports:
-      - 8089:8080
-    restart: always
+#  adminer:
+#    image: adminer
+#    ports:
+#      - 8089:8080
+#    restart: always

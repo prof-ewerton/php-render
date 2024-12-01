@@ -12,7 +12,7 @@ function initialPage() {
 // TODO: Deixar o formulário com verificação antes do envio.
 
     $linkRegister = $t->link([
-        'url' => '/register-form',
+        'url' => '/register',
         'text' => 'Fazer parte do Cody :D (Cadastro de usuários)',
     ]);
 

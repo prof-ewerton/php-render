@@ -8,10 +8,11 @@ require_once('addons/Autentication/views/notRegistredPage.php');
 
 function registerController() {
     $params = Router::$POST;
-
-    echo json_encode($params);
-
-    if (isset($params['email']) && isset($params['password'])) {
-
-    }
+    echo $params;
+    //echo json_encode($params);
+    
+        // TODO: Pesquisa se já está cadastrado.
+        // TODO: Se estiver, redireciona para a página de mensagem de usuário já cadastrado.
+        // TODO: Senão, realiza o cadastro.
+    
 }
