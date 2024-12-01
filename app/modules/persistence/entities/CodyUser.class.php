@@ -13,7 +13,7 @@ class CodyUser extends CodyEntity {
 
     public function __construct() {
         parent::__construct();
-        parent::setSubType('user');
+        parent::setSubType('user'); // TODO: E se eu mudar para type user ao invés de subtype, assim posso usar o subtype
     }
 
     public function getEmail(): string {

@@ -4,7 +4,7 @@
 * Autor: Ewerton Mendonça
 * Descrição: 
 */
-require_once('addons/Autentication/views/notRegistredPage.php');
+require_once('addons/Autentication/views/notRegisteredPage.php');
 
 function loginController() {
     $params = Router::$POST;
@@ -18,7 +18,7 @@ function loginController() {
     if (false) {
 
     } else {
-        notRegistredPage();
+        notRegisteredPage();
     }
     // TODO: Verifica se o usuário está cadastrado no banco.
     // TODO: Caso esteja: Exibe a página de dashboard. (Qual delas??? Qualquer usuário pode fazer uma turma ou apenas usuários autorizados?)

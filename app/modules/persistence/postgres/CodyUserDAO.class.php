@@ -65,7 +65,7 @@ class CodyUserDAO {
 
     public function searchUser(string $email, string $password): CodyUser {
         try {
-            $sql = "SELECT * FROM cody_user WHERE email = :email AND password = :password";
+            $sql = "SELECT * FROM users WHERE email = :email AND password = :password";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':email', $email);
             $stmt->bindValue(':password', $password);
@@ -80,9 +80,26 @@ class CodyUserDAO {
                 
                 return $user;
             }
-            throw new Exception("User not found");
+            return null;
         } catch (PDOException $e) {
             throw new Exception("Error registering user: " . $e->getMessage());
         }
+    }
+
+    public function searchUserByEmail(string $email): bool {
+        try {
+            $sql = "SELECT * FROM users WHERE email = :email";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':email', $email);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                return True;
+            }
+            return false;
+        } catch (PDOException $e) {
+            throw new Exception("Error registering user: " . $e->getMessage());
+        }
+        return False;
     }
 }

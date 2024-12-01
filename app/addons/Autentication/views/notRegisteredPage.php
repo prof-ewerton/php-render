@@ -6,7 +6,7 @@
 */
 require_once('modules/Template.class.php');
 
-function notRegistredPage() {
+function notRegisteredPage() {
     $t = new Template();
 
     // TODO: Criação de um link (ou bottão de link)

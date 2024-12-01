@@ -8,7 +8,7 @@ require_once('addons/Addon.class.php');
 require_once('addons/Autentication/views/initialPage.php');
 require_once('addons/Autentication/views/registerUserPage.php');
 require_once('addons/Autentication/controllers/loginController.php');
-require_once('addons/Autentication/controllers/registerController.php');
+require_once('addons/Autentication/controllers/RegisterController.class.php');
 
 class Autentication extends Addon {
 
@@ -16,7 +16,7 @@ class Autentication extends Addon {
         $router->addRoute('/', array($this, "login"));
         $router->addRoute('/autentication', array($this, "autentication"));
         $router->addRoute('/register-form', array($this, "registerForm"));
-        $router->addRoute('/register', array($this, "registerAction"));
+        $router->addRoute('/register', array(new RegisterController(), "registerUser"));
     }
 
     public function login() {
@@ -29,9 +29,5 @@ class Autentication extends Addon {
 
     public function registerForm() {
         registerUserPage();
-    }
-
-    public function registerAction() {
-        registerController();
     }
 }

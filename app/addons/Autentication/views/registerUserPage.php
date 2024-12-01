@@ -15,9 +15,14 @@ function registerUserPage() {
 
     $form = $t->form([
        'method' => 'POST',
-       'action' => '/registerController',
+       'action' => '/register',
        'description' => 'Precisamos de algumas informações. Não se preocupe, não compartilhamos qualquer informações com terceiros.',
        'form' => [
+            'text' => [
+                'placeholder' => 'Digite seu nome',
+                'label' => 'Nome:',
+                'variable' => 'nome',
+            ],
             'email' => [
                 'placeholder' => 'Digite seu e-mail',
                 'label' => 'E-mail:',
