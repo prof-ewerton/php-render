@@ -12,6 +12,7 @@ class Dashboards extends Addon {
 
     public function __construct($router) {
         $router->addRoute('/dashboard/user', array($this, "dashboardUser"));
+        $router->addRoute('/dashboard/group', array($this, "dashboardGroup"));
     }
 
     public function getMenu() {
@@ -25,7 +26,7 @@ class Dashboards extends Addon {
                 ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
             ]],
             ['title' => 'Grupos', 'submenu' => [
-                ['title' => 'Administrar grupos...', 'href' => '#' ],
+                ['title' => 'Administrar grupos...', 'href' => '/dashboard/group' ],
                 ['bar' => true],
                 ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
                 ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
@@ -35,22 +36,37 @@ class Dashboards extends Addon {
         ];
     }
 
+    public function pageDashboard(string $content = '', array $menu = []) {
+        $t = new Template();
+
+        $html = $t->topbar([
+            'brand' => ['title' => 'Cody ;D', 'href' => '/' ],
+            'menu' => $menu,
+            'end' => 'Logout',
+        ]);
+        
+        $html = $t->page([
+            'title' => 'Cody :D',
+            'content' => $html . $content,
+        ]);
+
+        $t->out($html);
+    }
+
     public function dashboardUser() {
         if (! GateKeeper::isLoggedIn()) {
             header('Location: /');
             exit;
         }
 
+        try {
+            $content = "<h3>Bem vindo, " . GateKeeper::getLoggedInUserEntity()->getName() . "!</h3>";
+        } catch (Exception $e) {
+            $content = "<h3>Erro ao buscar usuário logado!</h3>";
+        }
+
         $t = new Template();
-
-
-        $html = $t->topbar([
-            'brand' => ['title' => 'Cody ;D', 'href' => '/' ],
-            'menu' => $this->getMenu(),
-            'end' => 'Logout',
-        ]);
-        
-        $html .= $t->grid([
+        $grid = $t->grid([
             [
                 [
                     'content' => '',
@@ -62,7 +78,7 @@ class Dashboards extends Addon {
                     'width'   => '3',
                 ],
                 [
-                    'content' => '',
+                    'content' => $content,
                     'width'   => '6',
                 ],
                 [
@@ -71,13 +87,8 @@ class Dashboards extends Addon {
                 ],
             ],
         ]);
-        
-        $html = $t->page([
-            'title' => 'Cody :D',
-            'content' => $html
-        ]);
 
-        $t->out($html);
+        $this->pageDashboard($grid, $this->getMenu());
     }
 
     public function teste() {
