@@ -14,6 +14,27 @@ class Dashboards extends Addon {
         $router->addRoute('/dashboard/user', array($this, "dashboardUser"));
     }
 
+    public function getMenu() {
+        return [
+            ['title' => 'Home',   'href' => '/'       ],
+            ['title' => 'Cursos', 'submenu' => [
+                ['title' => 'Administrar cursos...', 'href' => '#' ],
+                ['bar' => true],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+            ]],
+            ['title' => 'Grupos', 'submenu' => [
+                ['title' => 'Administrar grupos...', 'href' => '#' ],
+                ['bar' => true],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+            ]],
+            ['title' => 'Sobre',  'href' => '/sobre'  ],
+        ];
+    }
+
     public function dashboardUser() {
         if (! GateKeeper::isLoggedIn()) {
             header('Location: /');
@@ -25,17 +46,7 @@ class Dashboards extends Addon {
 
         $html = $t->topbar([
             'brand' => ['title' => 'Cody ;D', 'href' => '/' ],
-            'menu' => [
-                ['title' => 'Home',   'href' => '/'       ],
-                ['title' => 'Cursos', 'submenu' => [
-                    ['title' => 'Administrar cursos...', 'href' => '#' ],
-                    ['bar' => true],
-                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
-                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
-                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
-                ]],
-                ['title' => 'Sobre',  'href' => '/sobre'  ],
-            ],
+            'menu' => $this->getMenu(),
             'end' => 'Logout',
         ]);
         
