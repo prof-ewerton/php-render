@@ -10,7 +10,7 @@ require_once('modules/persistence/entities/CodyEntity.class.php');
 require_once('modules/persistence/entities/CodyUser.class.php');
 require_once('modules/persistence/AccessId.enum.php');
 require_once('modules/persistence/postgres/ConnectionPostgres.class.php');
-require_once('modules/persistence/postgres/schema/migrations/Migration003.class.php');
+require_once('modules/persistence/postgres/schema/migrations/Migration004.class.php');
 
 class Test extends Addon {
 
@@ -70,7 +70,7 @@ class Test extends Addon {
     }
 
     public function install() {
-        $m = new Migration003();
+        $m = new Migration004();
         $m->migrate();
     }
 

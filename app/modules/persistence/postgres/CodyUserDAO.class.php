@@ -65,7 +65,10 @@ class CodyUserDAO {
 
     public function searchUser(string $email, string $password): CodyUser {
         try {
-            $sql = "SELECT * FROM users WHERE email = :email AND password = :password";
+            $sql = "SELECT users.*, entities.* 
+                    FROM users 
+                    JOIN entities ON users.uuid_entity = entities.uuid 
+                    WHERE users.email = :email AND users.password = :password";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':email', $email);
             $stmt->bindValue(':password', $password);
@@ -74,13 +77,13 @@ class CodyUserDAO {
             if ($result) {
                 $user = new CodyUser();
                 $user->setUUID($result['uuid']);
-                $user->setName($result['name']);
+                $user->setName($result['entity_name']);
                 $user->setEmail($result['email']);
                 $user->setPassword($result['password']);
                 
                 return $user;
             }
-            return null;
+            throw new Exception("User not registered");
         } catch (PDOException $e) {
             throw new Exception("Error registering user: " . $e->getMessage());
         }

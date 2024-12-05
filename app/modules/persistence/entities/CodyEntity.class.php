@@ -96,4 +96,9 @@ class CodyEntity {
 		$relationId = 0;
 		return $relationId;
 	}
+	
+    public function json() {
+        $vars = get_object_vars($this);
+        return json_encode($vars);
+    }
 }

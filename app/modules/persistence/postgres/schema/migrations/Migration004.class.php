@@ -6,7 +6,7 @@
 */
 require_once("modules/persistence/postgres/ConnectionPostgres.class.php");
 
-class Migration003 {
+class Migration004 {
 
     public function migrate() {
         $db = new ConnectionPostgres();
@@ -26,20 +26,20 @@ class Migration003 {
         }
         
         try {
-            $sql = "DROP TABLE IF EXISTS entity";
+            $sql = "DROP TABLE IF EXISTS entities";
             $stmt = $pdo->prepare($sql);
             
             if ($stmt->execute()) {
-                echo "Tabela 'entity' apagada com sucesso.\n";
+                echo "Tabela 'entities' apagada com sucesso.\n";
             } else {
-                echo "Falha ao tentar apagar a tabela 'entity'.\n";
+                echo "Falha ao tentar apagar a tabela 'entities'.\n";
             }
         } catch (PDOException $e) {
             echo "Erro ao executar a operação: " . $e->getMessage();
         }
 
         try {
-            $sql = "CREATE TABLE entity (
+            $sql = "CREATE TABLE entities (
                 uuid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
                 created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 type_name VARCHAR(255) NOT NULL DEFAULT 'object',
@@ -51,9 +51,9 @@ class Migration003 {
             $stmt = $pdo->prepare($sql);
             
             if ($stmt->execute()) {
-                echo "Tabela 'entity' criada com sucesso.\n";
+                echo "Tabela 'entities' criada com sucesso.\n";
             } else {
-                echo "Falha ao tentar criar a tabela 'entity'.\n";
+                echo "Falha ao tentar criar a tabela 'entities'.\n";
             }
         } catch (PDOException $e) {
             echo "Erro ao executar a operação: " . $e->getMessage();
@@ -61,12 +61,9 @@ class Migration003 {
 
         try {
             $sql = "CREATE TABLE users (
-                uuid_entity UUID PRIMARY KEY  REFERENCES entities(uuid),
-                email VARCHAR(255) NOT NULL,
-                password VARCHAR(255) NOT NULL
-            );
-
-            )";
+                    uuid_entity UUID PRIMARY KEY REFERENCES entities(uuid),
+                    password VARCHAR(255) NOT NULL,
+                    email VARCHAR(255) NOT NULL);";
             $stmt = $pdo->prepare($sql);
             
             if ($stmt->execute()) {

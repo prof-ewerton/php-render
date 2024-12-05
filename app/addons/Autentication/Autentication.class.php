@@ -13,10 +13,11 @@ require_once('addons/Autentication/controllers/RegisterController.class.php');
 class Autentication extends Addon {
 
     public function __construct($router) {
-        $router->addRoute('/', array($this, "login"));
-        $router->addRoute('/autentication', array($this, "autentication"));
-        $router->addRoute('/register-form', array($this, "registerForm"));
-        $router->addRoute('/register', array(new RegisterController(), "registerUser"));
+        // TODO: Alterar addRoute para receber outra parâmetro com o método (GET, POST etc.)
+        $router->addRoute('/',              [$this, "login"]); // TODO: Transformar em Classe
+        $router->addRoute('/autentication', [$this, "autentication"]); // Verficar se Pages também podem ser transformadas em classes
+        $router->addRoute('/register-form', [$this, "registerForm"]);
+        $router->addRoute('/register',      [new RegisterController(), "registerUser"]);
     }
 
     public function login() {

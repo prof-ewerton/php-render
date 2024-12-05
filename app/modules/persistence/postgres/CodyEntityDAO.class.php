@@ -19,7 +19,7 @@ class CodyEntityDAO {
     public function create(CodyEntity $entity): string {
         $uuid = 0; 
 
-        $sql = "INSERT INTO entity (subtype, access_id, entity_name) 
+        $sql = "INSERT INTO entities (subtype, access_id, entity_name) 
                 VALUES ( :subtype, :accessid, :entityname) 
                 RETURNING uuid";
         $stmt = $this->pdo->prepare($sql);
@@ -38,7 +38,7 @@ class CodyEntityDAO {
     public function update(CodyEntity $entity): string {
         $uuid = 0;
 
-        $sql = "UPDATE entity
+        $sql = "UPDATE entities
                 SET owner_uuid = :owneruuid,
                     subtype = :subtype,
                     access_id = :accessid,
@@ -61,7 +61,7 @@ class CodyEntityDAO {
     }
 
     public function exists(string $uuid): bool {
-        $sql = "SELECT EXISTS ( SELECT 1 FROM entity WHERE uuid = :uuid )";
+        $sql = "SELECT EXISTS ( SELECT 1 FROM entities WHERE uuid = :uuid )";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(':uuid', $uuid, PDO::PARAM_STR);
         $stmt->execute();

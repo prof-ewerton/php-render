@@ -79,7 +79,7 @@ class Router {
 				foreach($this->filtersAfter as $f) {
 					call_user_func_array($f, array($url));
 				}
-				return;
+				//return;
 			}
 		}
 		exit();

@@ -43,4 +43,11 @@ class CodyUser extends CodyEntity {
             $dao->register($this);
         }
     }
+
+
+    
+    public function json() {
+        $vars = get_object_vars($this);
+        return parent::json() . json_encode($vars);
+    }
 }

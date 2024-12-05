@@ -307,6 +307,67 @@ class Template {
     }
 
 
+
+
+    public function topbar(array $options): string {
+        $opt = [];
+
+        $opt["brand"] = '';
+        if (isset($options["brand"])) {
+            $title = isset($options["brand"]["title"]) ? $options["brand"]["title"] : '';
+            $href = isset($options["brand"]["href"]) ? $options["brand"]["href"] : '';
+
+            $opt["brand"] = "<a class='navbar-brand' href='$href'>$title</a>";
+        }
+
+        $opt["menu"] = '';
+        if (isset($options["menu"])) {
+            $opt["menu"] = "<div class='collapse navbar-collapse' id='navbarSupportedContent'>";
+            $opt["menu"] .= "<ul class='navbar-nav me-auto mb-2 mb-lg-0'>";
+
+            foreach ($options["menu"] as $value) {
+                $menutitle = isset($value["title"]) ? $value["title"] : '';
+
+                if (isset($value["href"])) {
+                    $menuhref = $value["href"];
+                    $opt["menu"] .= "<li class='nav-item'>";
+                    $opt["menu"] .= "<a class='nav-link' href='$menuhref'>$menutitle</a>";
+                    $opt["menu"] .= "</li>";
+                }
+
+                if (isset($value["submenu"])) {
+                    $opt["menu"] .= "
+                        <li class='nav-item dropdown'>
+                            <a class='nav-link dropdown-toggle' href='#' id='navbarDropdown' role='button' data-bs-toggle='dropdown' aria-expanded='false'>
+                                $menutitle
+                            </a>
+                            <ul class='dropdown-menu' aria-labelledby='navbarDropdown'>";
+
+                    foreach ($value["submenu"] as $value2) {
+                        
+                        if (isset($value2["bar"])) {
+                            $opt["menu"] .= "<li><hr class='dropdown-divider'></li>";
+                        } else {
+                            $submenutitle = isset($value2["title"]) ? $value2["title"] : '';
+                            $submenuhref = isset($value2["href"]) ? $value2["href"] : '';
+                            
+                            $opt["menu"] .= "<li><a class='dropdown-item' href='$submenuhref'>$submenutitle</a></li>";
+                        }                        
+                    }
+                    
+                    $opt["menu"] .= "</ul></li>";
+                }
+            }
+
+            $opt["menu"] .= "</ul></div>";
+        }
+
+        $opt["end"] = isset($options["end"]) ? '<div class="navbar-text d-flex">' . $options["end"] .'</div>' : '';
+
+        return $this->view('topbar', $opt);
+    }
+
+
     /*
     * Recebe a localização relativa do template a partir da pasta components 'Page' e
     * um array correspondente as chaves e valores substitutos.

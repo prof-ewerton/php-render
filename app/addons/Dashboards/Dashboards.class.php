@@ -6,6 +6,7 @@
 */
 require_once('addons/Addon.class.php');
 require_once('modules/Template.class.php');
+require_once('modules/GateKeeper.class.php');
 
 class Dashboards extends Addon {
 
@@ -14,6 +15,61 @@ class Dashboards extends Addon {
     }
 
     public function dashboardUser() {
+        if (! GateKeeper::isLoggedIn()) {
+            header('Location: /');
+            exit;
+        }
+
+        $t = new Template();
+
+
+        $html = $t->topbar([
+            'brand' => ['title' => 'Cody ;D', 'href' => '/' ],
+            'menu' => [
+                ['title' => 'Home',   'href' => '/'       ],
+                ['title' => 'Cursos', 'submenu' => [
+                    ['title' => 'Administrar cursos...', 'href' => '#' ],
+                    ['bar' => true],
+                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                    ['title' => 'Outra ação sobre cursos...',  'href' => '#' ],
+                ]],
+                ['title' => 'Sobre',  'href' => '/sobre'  ],
+            ],
+            'end' => 'Logout',
+        ]);
+        
+        $html .= $t->grid([
+            [
+                [
+                    'content' => '',
+                ],
+            ],
+            [
+                [
+                    'content' => '',
+                    'width'   => '3',
+                ],
+                [
+                    'content' => '',
+                    'width'   => '6',
+                ],
+                [
+                    'content' => '',
+                    'width'   => '3',
+                ],
+            ],
+        ]);
+        
+        $html = $t->page([
+            'title' => 'Cody :D',
+            'content' => $html
+        ]);
+
+        $t->out($html);
+    }
+
+    public function teste() {
         $t = new Template();
 
         $top = $t->card([
