@@ -15,10 +15,10 @@ class CodyUserDAO {
         $this->pdo = $pg->getConnection();
     }
 
-    public function exists(CodyUser $user): bool {
+    public function exists(string $UUID): bool {
         $sql = "SELECT EXISTS ( SELECT 1 FROM users WHERE uuid_entity = :uuid )";
         $stmt = $this->pdo->prepare($sql);
-        $stmt->bindValue(':uuid', $user->getUUID());
+        $stmt->bindValue(':uuid', $UUID);
         $stmt->execute();
         
         $exists = $stmt->fetchColumn();

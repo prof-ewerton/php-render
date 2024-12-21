@@ -11,7 +11,7 @@ class CodyEntity {
 
 	private string $UUID;
 	private DateTime $createdAt;
-	private string $type = 'object';
+	protected string $type = 'object';
 
 	private string $ownerUUID = '';
 	private string $subtype = '';

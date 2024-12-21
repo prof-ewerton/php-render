@@ -13,7 +13,7 @@ class CodyUser extends CodyEntity {
 
     public function __construct() {
         parent::__construct();
-        parent::setSubType('user'); // TODO: E se eu mudar para type user ao invés de subtype, assim posso usar o subtype
+        $this->type = 'user';
     }
 
     public function getEmail(): string {
@@ -37,7 +37,7 @@ class CodyUser extends CodyEntity {
         
         $dao = new CodyUserDAO();
 
-        if ($dao->exists($this)) {
+        if ($dao->exists($this->getUUID())) {
             $dao->update($this);
         } else {
             $dao->register($this);
