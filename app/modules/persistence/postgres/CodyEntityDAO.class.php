@@ -18,11 +18,13 @@ class CodyEntityDAO {
 
     public function create(CodyEntity $entity) {
 
-        $sql = "INSERT INTO entities (subtype, access_id, entity_name) 
-                VALUES (:subtype, :accessid, :entityname) 
+        $sql = "INSERT INTO entities (type_name, subtype, access_id, entity_name) 
+                VALUES (:type_name, :subtype, :accessid, :entityname) 
                 RETURNING uuid, created_at";
         $stmt = $this->pdo->prepare($sql);
 
+        $stmt->bindValue(":type_name", $entity->gettype());
+        #$stmt->bindValue(":owner_uuid", $entity->getOwnerUUID());
         $stmt->bindValue(":subtype", $entity->getSubtype());
         $stmt->bindValue(":accessid", ($entity->getAccessId())->value);
         $stmt->bindValue(":entityname", $entity->getName());

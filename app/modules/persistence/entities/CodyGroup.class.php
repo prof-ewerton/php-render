@@ -14,6 +14,8 @@ class CodyGroup extends CodyEntity {
     public function __construct(string $name) {
         parent::__construct();
         parent::setType('group');
+        # TODO: tem que pegar o do GATEKEEPER
+        #parent::setOwnerUUID();
         parent::setName($name);
 
         parent::save();

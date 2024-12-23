@@ -35,6 +35,7 @@ class Test extends Addon {
     }
 
     public function testeCreateGroupUser() {
+        // TODO: FALTOU ATUALIZAR NA ENTITY O TYPE_NAME E O OWNER_UUID
         $this->g1 = new CodyGroup("players");
         $this->g1->add($this->u1);
         $this->g1->add($this->u2);
