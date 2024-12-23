@@ -16,12 +16,11 @@ class CodyEntityDAO {
         $this->pdo = $pg->getConnection();
     }
 
-    public function create(CodyEntity $entity): string {
-        $uuid = 0; 
+    public function create(CodyEntity $entity) {
 
         $sql = "INSERT INTO entities (subtype, access_id, entity_name) 
-                VALUES ( :subtype, :accessid, :entityname) 
-                RETURNING uuid";
+                VALUES (:subtype, :accessid, :entityname) 
+                RETURNING uuid, created_at";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->bindValue(":subtype", $entity->getSubtype());
@@ -29,10 +28,10 @@ class CodyEntityDAO {
         $stmt->bindValue(":entityname", $entity->getName());
 
         if ($stmt->execute()) {
-            $uuid = $stmt->fetchColumn();
+            $results = $stmt->fetchAll();
+            $entity->setUUID($results[0]['uuid']);
+            $entity->setCreatedAt(new DateTime($results[0]['created_at']));
         }
-
-        return $uuid;
     }
 
     public function update(CodyEntity $entity): string {
@@ -44,7 +43,7 @@ class CodyEntityDAO {
                     access_id = :accessid,
                     entity_name = :entityname
                 WHERE uuid = :uuid
-                RETURNING uuid";
+                RETURNING uuid, created_at";
         $stmt = $this->pdo->prepare($sql);
 
         $stmt->bindValue(":owneruuid", $entity->getOwnerUUID());
@@ -54,7 +53,8 @@ class CodyEntityDAO {
         $stmt->bindValue(":uuid", $entity->getUUID());
 
         if ($stmt->execute()) {
-            $uuid = $stmt->fetchColumn();
+            $uuid = $stmt->fetchColumn(0);
+            $created_at = new DateTime($stmt->fetchColumn(1));
         }
 
         return $uuid;

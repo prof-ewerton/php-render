@@ -9,52 +9,40 @@ require_once('modules/persistence/postgres/CodyGroupDAO.class.php');
 
 class CodyGroup extends CodyEntity {
 
-    private array $group;
+    private CodyGroupDAO $dao;
 
     public function __construct(string $name) {
         parent::__construct();
-        $this->type = 'group';
+        parent::setType('group');
         parent::setName($name);
-        
-        $this->group = [];
+
+        parent::save();
+
+        $this->dao = new CodyGroupDAO();
     }
 
     public function add(CodyEntity $entity) {
-        $group[] = $entity;
-        $this->save();
+        $this->dao->add($this, $entity);
     }
 
-    public function remove(string $UUID) {
-        foreach ($this->group as $key => $value) {
-            if ($value->getUUID() == $UUID) {
-                unset($this->group[$key]);
-            }
-        }
-        $this->save();
+    public function remove(CodyEntity $entity) {
+        $this->dao->remove($this, $entity);
     }
 
     public function getEntity(string $UUID): CodyEntity {
-        foreach ($this->group as $key => $value) {
-            if ($value->getUUID() == $UUID) {
-                return $this->group[$key];
-            }
+        try {
+            return $this->dao->getEntity($this, $UUID);
+        } catch (Exception $e) {
+            throw new Exception("Grupo não encontrado");
         }
-        return throw new Exception("Entity not found.");
     }
 
-
-    public function save() {
-        parent::save();
-        
-        $dao = new CodyGroupDAO();
-
-        /*
-        if ($dao->exists($this)) {
-            $dao->update($this);
-        } else {
-            $dao->register($this);
+    public function getEntities(): array {
+        try {
+            return $this->dao->getEntities($this);
+        } catch (Exception $e) {
+            throw new Exception("Grupo não encontrado");
         }
-        */
     }
 
 

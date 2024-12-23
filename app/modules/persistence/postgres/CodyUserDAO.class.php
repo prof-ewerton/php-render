@@ -26,20 +26,16 @@ class CodyUserDAO {
         return $exists;
     }
 
-    public function register(CodyUser $user): CodyUser {
+    public function register(CodyUser $user) {
         try {
             $sql = "INSERT INTO 
                     users (uuid_entity, email, password) 
-                    VALUES (:uuid_entity, :email, :password)
-                    RETURNING uuid_entity";
+                    VALUES (:uuid_entity, :email, :password)";
             $stmt = $this->pdo->prepare($sql);
             $stmt->bindValue(':uuid_entity', $user->getUUID());
             $stmt->bindValue(':email', $user->getEmail());
             $stmt->bindValue(':password', $user->getPassword());
-            $uuid = $stmt->execute();
-
-            $user->setUUID($uuid);
-            return $user;
+            $stmt->execute();
         } catch (PDOException $e) {
             throw new Exception("Error registering user: " . $e->getMessage());
         }
@@ -104,5 +100,32 @@ class CodyUserDAO {
             throw new Exception("Error registering user: " . $e->getMessage());
         }
         return False;
+    }
+
+    public function getEntity(string $UUID): CodyUser {
+        try {
+            $sql = "SELECT users.*, entities.*
+                    FROM users
+                    JOIN entities ON users.uuid_entity = entities.uuid
+                    WHERE users.uuid_entity = :uuid";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindValue(':uuid', $UUID);
+            $stmt->execute();
+            $result = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($result) {
+                $user = new CodyUser();
+                $user->setUUID($result['uuid']);
+                $user->setCreatedAt($result['created_at']);
+                $user->setType($result['type']);
+                $user->setName($result['entity_name']);
+                $user->setEmail($result['email']);
+                $user->setPassword($result['password']);
+
+                return $user;
+            }
+            throw new Exception("User not registered");
+        } catch (PDOException $e) {
+            throw new Exception("Error registering user: " . $e->getMessage());
+        }
     }
 }

@@ -13,7 +13,7 @@ class CodyUser extends CodyEntity {
 
     public function __construct() {
         parent::__construct();
-        $this->type = 'user';
+        parent::setType('user');
     }
 
     public function getEmail(): string {

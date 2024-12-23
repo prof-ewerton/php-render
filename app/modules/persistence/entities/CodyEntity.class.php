@@ -11,7 +11,7 @@ class CodyEntity {
 
 	private string $UUID;
 	private DateTime $createdAt;
-	protected string $type = 'object';
+	private string $type = 'object';
 
 	private string $ownerUUID = '';
 	private string $subtype = '';
@@ -32,12 +32,20 @@ class CodyEntity {
 		$this->UUID = $UUID;
 	}
 
+	public function getCreatedAt(): DateTime {
+		return $this->createdAt;
+	}
+
+	public function setCreatedAt(DateTime $createdAt) {
+		$this->createdAt = $createdAt;
+	}
+
 	public function getType(): string {
 		return $this->type;
 	}
 
-	public function getCreatedAt(): DateTime {
-		return $this->createdAt;
+	public function setType(string $type) {
+		$this->type = $type;
 	}
 
 	public function getOwnerUUID(): string {
@@ -79,8 +87,7 @@ class CodyEntity {
 				return;
 			}
 		}
-		$uuid = $this->dao->create($this);
-		$this->setUUID($uuid);
+		$this->dao->create($this);
 	}
 
 	public function exists(): bool {

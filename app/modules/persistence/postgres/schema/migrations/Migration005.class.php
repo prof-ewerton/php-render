@@ -91,9 +91,8 @@ class Migration005 {
 
         try {
             $sql = "CREATE TABLE groups (
-                    uuid_entity UUID PRIMARY KEY REFERENCES entities(uuid),
-                    uuid_entity_item UUID not null);
-                   ";
+                    uuid_entity_group UUID REFERENCES entities(uuid),
+                    uuid_entity_item UUID REFERENCES entities(uuid));";
             $stmt = $pdo->prepare($sql);
             
             if ($stmt->execute()) {
