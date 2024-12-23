@@ -11,12 +11,11 @@ class CodyGroup extends CodyEntity {
 
     private CodyGroupDAO $dao;
 
-    public function __construct(string $name) {
+    public function __construct(string $subtype, string $ownerUUID) {
         parent::__construct();
         parent::setType('group');
-        # TODO: tem que pegar o do GATEKEEPER
-        #parent::setOwnerUUID();
-        parent::setName($name);
+        parent::setOwnerUUID($ownerUUID);
+        parent::setSubtype($subtype);
 
         parent::save();
 

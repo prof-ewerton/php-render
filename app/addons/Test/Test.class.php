@@ -18,7 +18,7 @@ class Test extends Addon {
 
     private CodyEntity $e;
     private CodyUser $u1, $u2, $u3;
-    private CodyGroup $g1, $g2, $g3;
+    private CodyGroup $g1;
     
     public function __construct($router) {
         $router->addRoute('/test', array($this, "index"));
@@ -32,11 +32,19 @@ class Test extends Addon {
         $this->testeUpdateEntity();
         $this->testeRegisterUser();
         $this->testeCreateGroupUser();
+        $this->testeListItemsGroup();
+    }
+
+    public function testeListItemsGroup() {
+        $this->message("- LISTANDO OS ITENS SALVOS NO GRUPO...");
+
+        #$this->message("Test list items group OK!");
     }
 
     public function testeCreateGroupUser() {
-        // TODO: FALTOU ATUALIZAR NA ENTITY O TYPE_NAME E O OWNER_UUID
-        $this->g1 = new CodyGroup("players");
+        $this->message("- SALVANDO UM GRUPO COM TRÊS USUÁRIOS...");
+        
+        $this->g1 = new CodyGroup("players", "e47a409c-1d9d-4867-9f77-6d35f73d2b2f");
         $this->g1->add($this->u1);
         $this->g1->add($this->u2);
         $this->g1->add($this->u3);
@@ -45,6 +53,8 @@ class Test extends Addon {
     }
 
     public function testeRegisterUser() {
+        $this->message("- SALVANDO TRÊS USERS...");
+
         $this->u1 = new CodyUser();
         $this->u1->setName("Fulano de Tal");
         $this->u1->setEmail("fulano@email.com");
@@ -71,6 +81,8 @@ class Test extends Addon {
     }
 
     public function testeUpdateEntity() {
+        $this->message("- ALTERANDO UMA ENTIDADE EXISTENTE...");
+
         $this->e->setOwnerUUID("e47a409c-1d9d-4867-9f77-6d35f73d2b2f");
         $this->e->setSubtype('updateok!');
         $this->e->setAccessId(AccessId::ACCESS_PRIVATE);
@@ -82,6 +94,8 @@ class Test extends Addon {
     }
 
     public function testeEntityExists() {
+        $this->message("- VERIFICANDO SE A ENTIDADE SALVA EXISTE...");
+
         $resp = $this->e->exists();
         if ($resp) 
             $this->message("Test entity exists OK!");
@@ -90,6 +104,8 @@ class Test extends Addon {
     }
 
     public function testSaveNewEntity() {
+        $this->message("- SALVANDO UMA NOVA ENTIDADE...");
+
         $this->e = new CodyEntity();
         $this->e->setOwnerUUID("987e6543-e21b-32d3-b456-426614174999");
         $this->e->setSubtype('test');
@@ -102,17 +118,21 @@ class Test extends Addon {
     }
 
     public function install() {
+        $this->message("- INICIANDO MIGRAÇÃO...");
+
         $m = new Migration005();
         $m->migrate();
 
-        $this->message("Migrate ok!");
+        $this->message("Migrate OK!");
     }
 
     public function testConnection() {
+        $this->message("- INICIANDO TESTE DE CONEXÃO COM O POSTGRES...");
+
         $pg = new ConnectionPostgres();
         $pg->getConnection();
 
-        $this->message("Teste connection postgres ok!");
+        $this->message("Test connection postgres OK!");
     }
 
     public function message(string $msg) {
