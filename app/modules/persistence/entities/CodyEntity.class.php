@@ -18,12 +18,6 @@ class CodyEntity {
 	private AccessId $accessId = AccessId::ACCESS_PRIVATE;
 	private string $name = '';
 
-	private CodyEntityDAO $dao;
-
-	public function __construct() {
-        $this->dao = new CodyEntityDAO();
-    }
-
 	public function getUUID(): string {
 		return $this->UUID;
 	}
@@ -81,17 +75,19 @@ class CodyEntity {
 	}
 
 	public function save() {
+		$dao = new CodyEntityDAO();
 		if (isset($this->UUID)) {
-			if ($this->dao->exists($this->UUID)) {
-				$this->dao->update($this);
+			if ($dao->exists($this->UUID)) {
+				$dao->update($this);
 				return;
 			}
 		}
-		$this->dao->create($this);
+		$dao->create($this);
 	}
 
 	public function exists(): bool {
-		return $this->dao->exists($this->UUID);
+		$dao = new CodyEntityDAO();
+		return $dao->exists($this->UUID);
 	}
 
 	public function annotate(string $name, $value): string {

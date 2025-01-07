@@ -54,13 +54,14 @@ class Dashboards extends Addon {
     }
 
     public function dashboardUser() {
-        if (! GateKeeper::isLoggedIn()) {
-            header('Location: /');
-            exit;
-        }
+        (new GateKeeper)->guard();
 
         try {
-            $content = "<h3>Bem vindo, " . GateKeeper::getLoggedInUserEntity()->getName() . "!</h3>";
+            $userUUID = (new GateKeeper)->getLoggedInUserUUID();
+
+
+
+            $content = "<h3>Bem vindo, " . $userUUID . "!</h3>";
         } catch (Exception $e) {
             $content = "<h3>Erro ao buscar usuário logado!</h3>";
         }
@@ -92,7 +93,13 @@ class Dashboards extends Addon {
     }
 
     public function dashboardGroup() {
-        if (! GateKeeper::isLoggedIn()) {
+        echo "Dashboard de grupos";
+        (new GateKeeper)->isLoggedIn();
+        exit;
+
+
+
+        if (! (new GateKeeper)->isLoggedIn()) {
             header('Location: /');
             exit;
         }

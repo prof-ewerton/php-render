@@ -12,7 +12,6 @@ class CodyUser extends CodyEntity {
     private string $password;
 
     public function __construct() {
-        parent::__construct();
         parent::setType('user');
     }
 

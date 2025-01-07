@@ -12,7 +12,6 @@ class Migration005 {
         $db = new ConnectionPostgres();
         $pdo = $db->getConnection();
 
-        
         try {
             $sql = "DROP TABLE IF EXISTS groups";
             $stmt = $pdo->prepare($sql);

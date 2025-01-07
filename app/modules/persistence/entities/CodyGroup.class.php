@@ -9,8 +9,6 @@ require_once('modules/persistence/postgres/CodyGroupDAO.class.php');
 
 class CodyGroup extends CodyEntity {
 
-    private CodyGroupDAO $dao;
-
     public function __construct(string $subtype, string $ownerUUID) {
         parent::__construct();
         parent::setType('group');
@@ -18,21 +16,22 @@ class CodyGroup extends CodyEntity {
         parent::setSubtype($subtype);
 
         parent::save();
-
-        $this->dao = new CodyGroupDAO();
     }
 
     public function add(CodyEntity $entity) {
-        $this->dao->add($this, $entity);
+        $dao = new CodyGroupDAO();
+        $dao->add($this, $entity);
     }
 
     public function remove(CodyEntity $entity) {
-        $this->dao->remove($this, $entity);
+        $dao = new CodyGroupDAO();
+        $dao->remove($this, $entity);
     }
 
     public function getEntity(string $UUID): CodyEntity {
         try {
-            return $this->dao->getEntity($this, $UUID);
+            $dao = new CodyGroupDAO();
+            return $dao->getEntity($this, $UUID);
         } catch (Exception $e) {
             throw new Exception("Grupo não encontrado");
         }
@@ -40,7 +39,8 @@ class CodyGroup extends CodyEntity {
 
     public function getEntities(): array {
         try {
-            return $this->dao->getEntities($this);
+            $dao = new CodyGroupDAO();
+            return $dao->getEntities($this);
         } catch (Exception $e) {
             throw new Exception("Grupo não encontrado");
         }
